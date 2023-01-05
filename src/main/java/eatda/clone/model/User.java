@@ -6,7 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames =  "email")})
+@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 @Getter
 @Entity
 public class User {
