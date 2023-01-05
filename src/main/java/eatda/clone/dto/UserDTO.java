@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseDto<T> {
-    private int status;
-    private T data;
+public class UserDTO {
+    private String token;
+    private String id;
+    private String email;
+    private String username;
+    private String password;
 }

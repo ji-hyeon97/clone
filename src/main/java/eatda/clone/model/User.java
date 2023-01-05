@@ -1,13 +1,17 @@
 package eatda.clone.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Builder
 @Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
-@Getter
 @Entity
 public class User {
 
