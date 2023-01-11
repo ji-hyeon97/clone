@@ -1,5 +1,6 @@
 package eatda.clone.service;
 
+import eatda.clone.exception.user.UserDuplicatedException;
 import eatda.clone.exception.user.UserNotFoundException;
 import eatda.clone.model.User;
 import eatda.clone.repository.UserRepository;
@@ -19,13 +20,13 @@ public class UserService {
 
     public User create(final User userEntity){
         if(userEntity == null || userEntity.getEmail() == null){
-            throw new RuntimeException("Invalid arguments");
+            throw new UserNotFoundException();
         }
 
         final String email = userEntity.getEmail();
         if(userRepository.existsByEmail(email)){
             log.warn("email already exists {}", email);
-            throw new UserNotFoundException();
+            throw new UserDuplicatedException();
         }
 
         return userRepository.save(userEntity);

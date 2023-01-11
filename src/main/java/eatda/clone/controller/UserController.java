@@ -4,6 +4,7 @@ import eatda.clone.config.security.jwt.TokenProvider;
 import eatda.clone.dto.ResponseDTO;
 import eatda.clone.dto.UserDTO;
 import eatda.clone.exception.user.UserNotFoundException;
+import eatda.clone.model.Role;
 import eatda.clone.model.User;
 import eatda.clone.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -34,12 +35,14 @@ public class UserController {
                     .email(userDTO.getEmail())
                     .username(userDTO.getUsername())
                     .password(encoder.encode(userDTO.getPassword()))
+                    .role(Role.USER)
                     .build();
 
             User registerUser = userService.create(user);
             UserDTO responseUserDTO = UserDTO.builder()
                     .email(registerUser.getEmail())
                     .username(registerUser.getUsername())
+                    .role(userDTO.getRole())
                     .id(registerUser.getId())
                     .build();
 
@@ -60,6 +63,7 @@ public class UserController {
                     .token(token)
                     .email(user.getEmail())
                     .username(user.getUsername())
+                    .role(user.getRole())
                     .id(user.getId())
                     .build();
             return new ResponseDTO<>(HttpStatus.OK.value(), responseUserDTO);
