@@ -12,10 +12,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 @Slf4j
 @RestController
@@ -29,7 +33,8 @@ public class UserController {
 
     @PostMapping(value = "/signup")
     @ApiOperation(value = "회원가입", notes = "UserDTO 객체로 받아 유저를 등록합니다.")
-    public ResponseDTO<?> registerUser(@RequestBody UserDTO userDTO) {
+    public ResponseDTO<?> registerUser(@RequestBody @Valid UserDTO userDTO) {
+
         try {
             User user = User.builder()
                     .email(userDTO.getEmail())
@@ -54,7 +59,7 @@ public class UserController {
 
     @PostMapping("/signin")
     @ApiOperation(value = "로그인", notes = "UserDTO 객체로 email과 password를 받아 로그인을 진행하고, token을 리턴합니다.")
-    public ResponseDTO<?> authenticate(@RequestBody UserDTO userDTO) {
+    public ResponseDTO<?> authenticate(@RequestBody @Valid UserDTO userDTO) {
         User user = userService.getByCredentials(userDTO.getEmail(), userDTO.getPassword(), encoder);
 
         if (user != null) {
