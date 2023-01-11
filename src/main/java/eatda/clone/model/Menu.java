@@ -1,7 +1,8 @@
 package eatda.clone.model;
 
 
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -9,6 +10,9 @@ import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor @NoArgsConstructor
+@ToString(exclude = "store")
 public class Menu {
 
     @Id
@@ -18,9 +22,10 @@ public class Menu {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "store_id")
+    @JsonIgnore
     private Store store;
 
     private String name;
     private String imageUrl;
-    private String price;
+    private int price;
 }
